@@ -9,3 +9,5 @@ In this cookie code, it basically will store what we search. So for example i se
 Set_Cookie function in the api is used to set the api to local 8k (this is not really useful, however i just add the code in case you want us to use API)
 
 In the postlist we make a local storage(not really local storage [it is a cookie but just think cookie as the local stoorage]), that is setting the cookies every we type in the search bar, and will take that local storage cookie value everytime we reload the page
+
+![KuKiss](https://github.com/Andrean2305/CookieSirBagus/assets/91464375/131a4b75-aa21-4e79-b9fb-13013ac73076)
