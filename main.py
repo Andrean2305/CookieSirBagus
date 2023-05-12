@@ -73,7 +73,7 @@ async def set_cookie(response: Response):
     return {"message": "Cookie set successfully."}
 
 @app.post("/login")
-async def login(request: Request, username: str = Body(...), password: str = Body(...)):
+async def login(request: Request, username: str = Body(...), password: str = Body(...), email: str = Body(...)):
     try:
         # Authenticate user
         # ...
@@ -81,9 +81,9 @@ async def login(request: Request, username: str = Body(...), password: str = Bod
         # Generate session ID
         session_id = str(uuid.uuid4())
 
-        # Store session ID in Firestore
+        # Store session data in Firestore
         doc_ref = db.collection("sessions").document(session_id)
-        doc_ref.set({"username": username})
+        doc_ref.set({"username": username, "email": email})
 
         # Set session ID in response header
         response = JSONResponse({"message": "Login successful."})
@@ -91,6 +91,7 @@ async def login(request: Request, username: str = Body(...), password: str = Bod
         return response
     except Exception as e:
         return {"error": str(e)}
+
 
 @app.get("/protected")
 async def protected(request: Request):
@@ -106,7 +107,10 @@ async def protected(request: Request):
         if not doc.exists:
             return {"error": "Session ID not found."}
 
-        # Session exists, return protected data
-        return {"protected_data": "This is protected data."}
+        # Session exists, retrieve session data
+        session_data = doc.to_dict()
+
+        # Return protected data, along with session data
+        return {"protected_data": "This is protected data.", "session_data": session_data}
     except Exception as e:
         return {"error": str(e)}
