@@ -16,3 +16,6 @@ In this session we can controll user behavious using session (for now it is not 
 
 BTW in every session there is unique id.
 ![image](https://github.com/Andrean2305/CookieSirBagus/assets/91464375/900f582a-83c7-4e16-bdff-c36aaa4e608d)
+
+Now the session have email and actually there is also password but it is highly encripted and using the unique id (only us can decrypt it hopefully). Not only you need to decrypt but also need to hack the database so double protection.
+![image](https://github.com/Andrean2305/CookieSirBagus/assets/91464375/a594ce2d-ee2d-4177-854a-84586f3c60d5)
