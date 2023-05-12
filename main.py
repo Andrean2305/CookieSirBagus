@@ -75,8 +75,6 @@ async def set_cookie(response: Response):
 @app.post("/login")
 async def login(request: Request, username: str = Body(...), password: str = Body(...), email: str = Body(...)):
     try:
-        # Authenticate user
-        # ...
 
         # Generate session ID
         session_id = str(uuid.uuid4())
