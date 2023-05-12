@@ -19,3 +19,11 @@ BTW in every session there is unique id.
 
 Now the session have email and actually there is also password but it is highly encripted and using the unique id (only us can decrypt it hopefully). Not only you need to decrypt but also need to hack the database so double protection.
 ![image](https://github.com/Andrean2305/CookieSirBagus/assets/91464375/a594ce2d-ee2d-4177-854a-84586f3c60d5)
+
+Using session and with the unique id we can take this 
+
+![image](https://github.com/Andrean2305/CookieSirBagus/assets/91464375/9ed749c6-fe3b-4b13-be11-0b0646b402f5)
+
+which is the data without dumbly check unique id one by one
+
+You can see the code at protection function session.
