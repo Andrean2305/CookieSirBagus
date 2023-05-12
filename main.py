@@ -1,5 +1,6 @@
-from fastapi import FastAPI, Request, Body,Response
+from fastapi import FastAPI, Request, Body, Response
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import JSONResponse
 import uuid
 import firebase_admin
 from firebase_admin import credentials, firestore
@@ -65,8 +66,47 @@ async def get_tweets(search_term: str = None):
         return {"tweets": tweets}
     except Exception as e:
         return {"error": str(e)}
-    
+
 @app.get("/set_cookie")
 async def set_cookie(response: Response):
     response.set_cookie(key="my_cookie", value="cookie_value")
     return {"message": "Cookie set successfully."}
+
+@app.post("/login")
+async def login(request: Request, username: str = Body(...), password: str = Body(...)):
+    try:
+        # Authenticate user
+        # ...
+
+        # Generate session ID
+        session_id = str(uuid.uuid4())
+
+        # Store session ID in Firestore
+        doc_ref = db.collection("sessions").document(session_id)
+        doc_ref.set({"username": username})
+
+        # Set session ID in response header
+        response = JSONResponse({"message": "Login successful."})
+        response.set_cookie(key="session_id", value=session_id)
+        return response
+    except Exception as e:
+        return {"error": str(e)}
+
+@app.get("/protected")
+async def protected(request: Request):
+    try:
+        # Get session ID from cookie
+        session_id = request.cookies.get("session_id")
+        if not session_id:
+            return {"error": "No session ID found."}
+
+        # Check if session ID exists in Firestore
+        doc_ref = db.collection("sessions").document(session_id)
+        doc = doc_ref.get()
+        if not doc.exists:
+            return {"error": "Session ID not found."}
+
+        # Session exists, return protected data
+        return {"protected_data": "This is protected data."}
+    except Exception as e:
+        return {"error": str(e)}
